@@ -1,0 +1,24 @@
+{
+  "name": "jarviscript",
+  "version": "1.0.0",
+  "description": "An smarthouse hub",
+  "main": "index.js",
+  "repository": "https://github.com/NativeStream/jarviscript",
+  "author": "NativeStream",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "@types/mongoose": "^5.7.35",
+    "@types/youtube-dl": "^1.12.2",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4",
+    "ts-node-dev": "^1.0.0-pre.56",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@open-wa/wa-automate": "^1.9.105",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.27",
+    "node-mpv": "^1.5.0"
+  }
+}
