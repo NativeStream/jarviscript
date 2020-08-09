@@ -9,6 +9,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.9",
     "@types/mongoose": "^5.7.35",
+    "@types/socket.io": "^2.1.10",
     "@types/youtube-dl": "^1.12.2",
     "jest": "^26.2.2",
     "ts-jest": "^26.1.4",
@@ -19,6 +20,7 @@
     "@open-wa/wa-automate": "^1.9.105",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.27",
-    "node-mpv": "^1.5.0"
+    "node-mpv": "^1.5.0",
+    "socket.io": "^2.3.0"
   }
 }
