@@ -1,7 +1,9 @@
+import services from "./ServiceRegister";
+
 export interface Subject {
   registerObserver(o: Observer): void;
   removeObserver(o: Observer): void;
-  notifyObservers(event: string, data: any): void;
+  notify(event: string, data: any): void;
 }
 
 export interface Observer {
@@ -10,8 +12,23 @@ export interface Observer {
   callback(data: any): void;
 }
 
+export interface Service {
+  globalInstance: any;
+  observers: Array<Observer>;
+  init(): void;
+}
+
 class Application implements Subject {
   private observers: Array<Observer> = [];
+
+  init(): void {
+    for (const service of services) {
+      service.init();
+      for (const oberserver of service.observers) {
+        this.registerObserver(oberserver);
+      }
+    }
+  }
 
   registerObserver(o: Observer): void {
     this.observers.push(o);
@@ -21,9 +38,11 @@ class Application implements Subject {
     this.observers.splice(index, 1);
   }
 
-  notifyObservers(event: string, data: any): void {
+  notify(event: string, data: any): void {
     for (const observer of this.observers) {
       if (observer.event == event) observer.callback(data);
     }
   }
 }
+
+export default new Application();

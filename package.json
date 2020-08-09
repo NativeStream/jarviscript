@@ -6,6 +6,9 @@
   "repository": "https://github.com/NativeStream/jarviscript",
   "author": "NativeStream",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev src/main.ts"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.9",
     "@types/mongoose": "^5.7.35",
