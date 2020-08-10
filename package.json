@@ -23,7 +23,7 @@
     "@open-wa/wa-automate": "^1.9.105",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.27",
-    "node-mpv": "^1.5.0",
+    "node-mpv": "^2.0.0-beta.0",
     "socket.io": "^2.3.0"
   }
 }
