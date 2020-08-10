@@ -1,9 +1,9 @@
 import { Observer, EventData } from "../../../app";
-import socketIO from "../";
+import socketIO from "..";
 import LoggerBuilder from "../../../logs/LoggerBuilder";
 
 class SendData implements Observer {
-  event: string = "SEND_DATA";
+  event: string = "SOCKET_SEND";
   callback(eventData: EventData): void {
     const socket = socketIO.globalInstance;
     LoggerBuilder.DEBUG("Socket send:", eventData);
