@@ -18,14 +18,19 @@ export default class LoggerBuilder {
   private errorHandle: Error;
   private logType: LogType;
 
-  constructor(text: string | Array<any>, logType: LogType) {
+  constructor(
+    text: string | Array<any>,
+    logType: LogType,
+    errorHandle?: Error
+  ) {
     this.text = text;
     this.logType = logType;
+    this.errorHandle = errorHandle;
   }
 
-  public static ERROR(text: string, error: Error, service: string = "") {
-    const message = this.createMessage(LogType.ERROR, text, service);
-    new LoggerBuilder(message, LogType.ERROR).log();
+  public static ERROR(text: string, error: Error) {
+    const message = this.createMessage(LogType.ERROR, text);
+    new LoggerBuilder(message, LogType.ERROR, error).log();
   }
 
   public static INFO(text: string, service: string = "") {
