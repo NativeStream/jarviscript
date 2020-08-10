@@ -1,7 +1,9 @@
 import { Service } from "./";
 
-import Websocket from "../endpoints/websocket";
+import websocket from "../endpoints/websocket";
+import player from "../interfaces/player";
+import database from "../interfaces/database";
 
-const services: Array<Service> = [new Websocket()];
+const services: Array<Service> = [database, websocket, player];
 
 export default services;
