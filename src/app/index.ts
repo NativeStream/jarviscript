@@ -1,4 +1,5 @@
 import services from "./ServiceRegister";
+import LoggerBuilder from "../logs/LoggerBuilder";
 
 export interface Subject {
   registerObserver(o: Observer): void;
@@ -22,6 +23,7 @@ class Application implements Subject {
   private observers: Array<Observer> = [];
 
   init(): void {
+    LoggerBuilder.INFO("Initializing and regitering services observers...");
     for (const service of services) {
       service.init();
       for (const oberserver of service.observers) {

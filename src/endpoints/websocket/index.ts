@@ -1,5 +1,6 @@
 import * as socketIO from "socket.io";
 import app, { Service, Observer } from "../../app";
+import LoggerBuilder from "../../logs/LoggerBuilder";
 
 export default class Websocket implements Service {
   public observers: Array<Observer> = [];
@@ -16,7 +17,7 @@ export default class Websocket implements Service {
     this.globalInstance = socketIO(this.options);
 
     this.globalInstance.on("connection", (socket) => {
-      console.log("connected", socket);
+      LoggerBuilder.DEBUG(app);
       socket.emit("message", "Hello, world!");
       socket.on("instance", (message) => {
         console.log("Listened", app);
