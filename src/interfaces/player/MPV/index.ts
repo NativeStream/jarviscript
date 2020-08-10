@@ -1,6 +1,7 @@
 import config from "./config";
+import { registerEvents } from "./Events";
 
-const mpvAPI = require("node-mpv");
+import * as mpvAPI from "node-mpv";
 
 export class MPVError extends Error {
   public errorCode: number;
@@ -29,12 +30,12 @@ export default class MPV {
 
   constructor() {
     const mpv = new mpvAPI(config);
-    // this.init(mpv);
+    this.init(mpv);
   }
 
   private async init(mpv: any) {
     await mpv.start(["--keep-open"]);
-    // registerEvents(mpv);
+    registerEvents(mpv);
     this.mpv = mpv;
   }
 

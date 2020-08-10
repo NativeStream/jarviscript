@@ -1,10 +1,17 @@
+import app from "../../../app";
+
+const events = {
+  "eof-reached": (value: any) => {
+    if (value) app.notify("PLAYER_NEXT");
+  },
+  pause: (value: any) => {
+    if (value) app.notify("PLAYER_PAUSE");
+  },
+};
+
 interface IEventStatus {
   property: string;
   value: any;
-}
-
-interface IEvent<callback> {
-  [propery: string]: callback;
 }
 
 const defaultEvents: Array<string> = [
@@ -19,15 +26,6 @@ const defaultEvents: Array<string> = [
   "playlist-count",
   "loop",
 ];
-
-const events: IEvent<Function> = {
-  "eof-reached": (value: any) => {
-    // if (value) playerService.next();
-  },
-  pause: (value: any) => {
-    console.log("pause", value);
-  },
-};
 
 function handleEvent({ property, value }: IEventStatus) {
   const callback: Function = events[property];
