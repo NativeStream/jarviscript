@@ -1,3 +1,5 @@
-import PlayerQueryAdded from "./PlayerQueryAdded";
+import PlayerAppend from "./PlayerAppend";
+import PlayerPlay from "./PlayerPlay";
+import PlayerPause from "./PlayerPause";
 
-export default [PlayerQueryAdded];
+export default [PlayerAppend, PlayerPlay, PlayerPause];

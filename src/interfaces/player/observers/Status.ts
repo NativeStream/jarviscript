@@ -3,9 +3,9 @@ import playerService from "../";
 import events from "../events";
 
 class Status implements Observer {
-  event: string = "STATUS";
+  event: string = events.request.REQUEST_STATUS;
   callback(eventData: EventData): void {
-    app.notify(events.SEND_STATUS, {
+    app.notify(events.emit.EMIT_STATUS, {
       ...eventData,
       data: playerService.player,
     });

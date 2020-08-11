@@ -1,10 +1,9 @@
 import { Observer } from "../../../app";
 import LoggerBuilder from "../../../logs/LoggerBuilder";
-import playerService from "../";
-import app from "../../../app";
+import events from "../events";
 
 class Next implements Observer {
-  event: string = "PLAYER_NEXT";
+  event: string = events.request.REQUEST_PLAYER_NEXT;
   from: string;
   callback(): void {
     LoggerBuilder.DEBUG("Event triggered:", this.event);

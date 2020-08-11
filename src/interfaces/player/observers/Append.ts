@@ -4,7 +4,7 @@ import PlayerController from "../controllers/PlayerController";
 import events from "../events";
 
 class Append implements Observer {
-  event: string = events.PLAYER_APPEND;
+  event: string = events.request.REQUEST_PLAYER_APPEND;
   async callback(eventData: EventData) {
     const query = eventData.data.query;
     if (!query) {
@@ -13,7 +13,7 @@ class Append implements Observer {
       throw error;
     }
     const data = await PlayerController.append(query);
-    app.notify(events.PLAYER_QUERY_ADDED, {
+    app.notify(events.emit.EMIT_PLAYER_APPEND, {
       ...eventData,
       data,
     });

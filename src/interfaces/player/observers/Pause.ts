@@ -3,11 +3,11 @@ import PlayerController from "../controllers/PlayerController";
 import events from "../events";
 
 class Pause implements Observer {
-  event: string = events.PLAYER_PAUSE;
+  event: string = events.request.REQUEST_PLAYER_PAUSE;
   from: string;
   async callback(eventData: EventData) {
     await PlayerController.pause();
-    app.notify("STATUS", eventData);
+    app.notify(events.emit.EMIT_PLAYER_PAUSE, eventData);
   }
 }
 

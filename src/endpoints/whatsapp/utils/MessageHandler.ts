@@ -12,7 +12,7 @@ enum EnumCommands {
 const commands = {
   [EnumCommands.ADD]: (from: string, ...args: Array<string>) => {
     const query = args[0];
-    app.notify(playerEvents.PLAYER_APPEND, {
+    app.notify(playerEvents.request.REQUEST_PLAYER_APPEND, {
       data: {
         query,
       },
@@ -20,10 +20,10 @@ const commands = {
     });
   },
   [EnumCommands.PLAY]: (from: string) => {
-    app.notify(playerEvents.PLAYER_PLAY, { user: from });
+    app.notify(playerEvents.request.REQUEST_PLAYER_PLAY, { user: from });
   },
   [EnumCommands.PAUSE]: (from: string) => {
-    app.notify(playerEvents.PLAYER_PAUSE, { user: from });
+    app.notify(playerEvents.request.REQUEST_PLAYER_PAUSE, { user: from });
   },
 };
 

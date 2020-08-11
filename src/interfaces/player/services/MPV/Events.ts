@@ -1,8 +1,9 @@
 import app from "../../../../app";
+import serviceEvents from "../../events";
 
 const events = {
   "eof-reached": (value: any) => {
-    if (value) app.notify("PLAYER_NEXT");
+    if (value) app.notify(serviceEvents.request.REQUEST_PLAYER_NEXT);
   },
   // pause: (value: any) => {
   //   if (value) app.notify("PLAYER_PAUSE");

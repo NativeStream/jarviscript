@@ -1,23 +1,20 @@
 import Player, { status } from "../models/Player";
-import app from "../../../app";
 import playerService from "../index";
 import LoggerBuilder from "../../../logs/LoggerBuilder";
 import queryFetcher from "../services/QueryFetcher";
 import { ServiceFetcherDTO } from "../services/QueryFetcher/ServiceFetcher";
-import events from "../events";
 import Song from "../models/Song";
 import ytdl from "../services/YoutubeDl";
+import PlaylistEmptyError from "../errors/PlaylistEmtpyError";
 
 export default class PlayerController {
-  public static async append(query: string) {
+  public static async append(query: string): Promise<ServiceFetcherDTO> {
     const fetched: ServiceFetcherDTO = await queryFetcher(query);
     const playerInstance: Player = playerService.player;
     for (const song of fetched.songs) {
       playerInstance.songs.push(song);
     }
     return fetched;
-    app.notify(events.PLAYER_QUERY_ADDED, { data: fetched });
-    // LoggerBuilder.DEBUG(fetched);
   }
 
   public static async play() {
@@ -25,8 +22,7 @@ export default class PlayerController {
     const index = playerInstance.index;
     let song: Song = playerInstance.songs[index];
 
-    if (playerInstance.songs.length == 0)
-      return app.notify(events.PLAYER_EMPTY_PLAYLIST);
+    if (playerInstance.songs.length == 0) throw new PlaylistEmptyError();
 
     if (!song || playerInstance.status == status.STOPED) {
       playerInstance.index = 0;
