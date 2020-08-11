@@ -1,4 +1,4 @@
-export default class SongDTO {
+export default class Song {
   _id?: string;
   title: string;
   artist?: string;

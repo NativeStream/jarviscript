@@ -1,10 +1,11 @@
 import app, { Observer } from "../../../app";
 import playerService from "../";
+import events from "../events";
 
 class Status implements Observer {
   event: string = "STATUS";
   callback(): void {
-    app.notify("SEND_STATUS", {
+    app.notify(events.SEND_STATUS, {
       data: playerService.player,
     });
   }

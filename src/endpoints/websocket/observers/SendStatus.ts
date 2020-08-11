@@ -1,9 +1,10 @@
 import app, { Observer, EventData } from "../../../app";
+import events from "../events";
 
 class SendStatus implements Observer {
   event: string = "SEND_STATUS";
   callback(eventData: EventData): void {
-    app.notify("SOCKET_SEND", eventData);
+    app.notify(events.SOCKET_SEND, eventData);
   }
 }
 

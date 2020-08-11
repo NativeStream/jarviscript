@@ -83,14 +83,20 @@ export default {
   async getInfoFromUrl(url: string): Promise<YoutubeResult> {
     try {
       const result: string = await new Promise((resolve, reject) => {
-        exec(
-          `youtube-dl ${url} --audio-format best --ignore-errors --flat-playlist -J -s --add-metadata`,
-          (error, stdout, stderr) => {
-            if (error) return reject(error);
-            if (stderr) return reject(stderr);
-            return resolve(stdout);
-          }
-        );
+        const args = [
+          "--audio-format best",
+          "--ignore-errors",
+          "--flat-playlist",
+          "-J",
+          "-s",
+          "--add-metadata",
+          "--yes-playlist",
+        ];
+        exec(`youtube-dl ${url} ${args.join(" ")}`, (error, stdout, stderr) => {
+          if (error) return reject(error);
+          if (stderr) return reject(stderr);
+          return resolve(stdout);
+        });
       });
 
       const parsed: any = JSON.parse(result);

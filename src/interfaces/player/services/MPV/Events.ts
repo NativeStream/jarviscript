@@ -1,12 +1,12 @@
-import app from "../../../app";
+import app from "../../../../app";
 
 const events = {
   "eof-reached": (value: any) => {
     if (value) app.notify("PLAYER_NEXT");
   },
-  pause: (value: any) => {
-    if (value) app.notify("PLAYER_PAUSE");
-  },
+  // pause: (value: any) => {
+  //   if (value) app.notify("PLAYER_PAUSE");
+  // },
 };
 
 interface IEventStatus {

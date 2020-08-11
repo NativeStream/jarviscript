@@ -1,6 +1,6 @@
 import { Observer, Service } from "../../app";
 import observers from "./observers";
-import MPV from "./MPV";
+import MPV from "./services/MPV";
 import Player from "./models/Player";
 
 class PlayerService implements Service {

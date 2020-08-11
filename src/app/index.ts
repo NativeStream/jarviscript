@@ -53,6 +53,7 @@ class Application implements Subject {
   }
 
   notify(event: string, eventData?: EventData): void {
+    LoggerBuilder.DEBUG("Event recived: ", event);
     for (const observer of this.observers) {
       if (observer.event == event) observer.callback(eventData);
     }

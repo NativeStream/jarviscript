@@ -1,5 +1,5 @@
 import SocketSend from "./SocketSend";
-import PlayerQueryAdded from "./PlayerQueryAdded";
 import SendStatus from "./SendStatus";
+import PlayerEvents from "./Player";
 
-export default [SocketSend, PlayerQueryAdded, SendStatus];
+export default [SocketSend, SendStatus, ...PlayerEvents];
