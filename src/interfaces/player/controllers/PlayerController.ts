@@ -15,8 +15,9 @@ export default class PlayerController {
     for (const song of fetched.songs) {
       playerInstance.songs.push(song);
     }
+    return fetched;
     app.notify(events.PLAYER_QUERY_ADDED, { data: fetched });
-    LoggerBuilder.DEBUG(fetched);
+    // LoggerBuilder.DEBUG(fetched);
   }
 
   public static async play() {
@@ -36,7 +37,7 @@ export default class PlayerController {
     await playerService.globalInstance.play(song.stream_url);
 
     playerInstance.setStatusPlaying();
-    app.notify("STATUS");
+    return playerInstance;
   }
 
   public static async pause() {
@@ -45,7 +46,7 @@ export default class PlayerController {
     await playerService.globalInstance.pause();
 
     playerInstance.setStatusPaused();
-    app.notify("STATUS");
+    return playerInstance;
   }
 
   public static async next() {}

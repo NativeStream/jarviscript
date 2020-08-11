@@ -3,7 +3,7 @@ import socketIO from "..";
 import LoggerBuilder from "../../../logs/LoggerBuilder";
 import socketEvents from "../events";
 
-class SendData implements Observer {
+class SocketSend implements Observer {
   event: string = socketEvents.SOCKET_SEND;
   callback(eventData: EventData): void {
     const socket = socketIO.globalInstance;
@@ -12,4 +12,4 @@ class SendData implements Observer {
   }
 }
 
-export default new SendData();
+export default new SocketSend();

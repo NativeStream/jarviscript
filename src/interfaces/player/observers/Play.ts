@@ -1,11 +1,13 @@
-import { Observer } from "../../../app";
+import app, { Observer, EventData } from "../../../app";
 import PlayerController from "../controllers/PlayerController";
+import events from "../events";
 
 class Play implements Observer {
-  event: string = "PLAYER_PLAY";
+  event: string = events.PLAYER_PLAY;
   from: string;
-  callback(): void {
-    PlayerController.play();
+  async callback(eventData: EventData) {
+    await PlayerController.play();
+    app.notify("STATUS", eventData);
   }
 }
 

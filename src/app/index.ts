@@ -4,7 +4,7 @@ import LoggerBuilder from "../logs/LoggerBuilder";
 export interface Subject {
   registerObserver(o: Observer): void;
   removeObserver(o: Observer): void;
-  notify(event: string, eventData): void;
+  notify(event: string, eventData: EventData): void;
 }
 
 export interface Observer {
@@ -22,6 +22,7 @@ export interface Service {
 export interface EventData {
   user?: any;
   data?: any;
+  event?: string;
 }
 
 class Application implements Subject {
