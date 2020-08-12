@@ -68,6 +68,6 @@ export default class LoggerBuilder {
       if (this.text instanceof Array) console.log(...this.text);
     } else if (this.logType != LogType.DEBUG) console.log(this.text);
 
-    if (this.logType == LogType.ERROR) console.log(this.errorHandle.stack);
+    if (this.logType == LogType.ERROR) console.log(this.errorHandle);
   }
 }
