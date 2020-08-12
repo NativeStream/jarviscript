@@ -6,6 +6,10 @@ enum EnumCommands {
   ADD = "ADD",
   PLAY = "PLAY",
   PAUSE = "PAUSE",
+  NEXT = "NEXT",
+  PREVIOUS = "PREVIOUS",
+  CLEAR = "CLEAR",
+  STOP = "STOP",
 }
 
 export default {
@@ -25,6 +29,26 @@ export default {
   },
   [EnumCommands.PAUSE]: (message: Message) => {
     app.notify(playerEvents.request.REQUEST_PLAYER_PAUSE, {
+      user: message.from,
+    });
+  },
+  [EnumCommands.NEXT]: (message: Message) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_NEXT, {
+      user: message.from,
+    });
+  },
+  [EnumCommands.PREVIOUS]: (message: Message) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_PREVIOUS, {
+      user: message.from,
+    });
+  },
+  [EnumCommands.CLEAR]: (message: Message) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_CLEAR, {
+      user: message.from,
+    });
+  },
+  [EnumCommands.STOP]: (message: Message) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_STOP, {
       user: message.from,
     });
   },
