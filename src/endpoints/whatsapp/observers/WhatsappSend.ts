@@ -9,7 +9,7 @@ class WhatsappSend implements Observer {
     const wpp = wppInstance.globalInstance;
     const message = eventData.data.message;
     LoggerBuilder.DEBUG("Wpp send:", eventData);
-    wpp.sendText(eventData.user, message);
+    if (eventData.user) wpp.sendText(eventData.user, message);
   }
 }
 
