@@ -5,6 +5,8 @@ import PlayerPrevious from "./PlayerPrevious";
 import PlayerStop from "./PlayerStop";
 import PlayerClear from "./PlayerClear";
 import PlayerNext from "./PlayerNext";
+import PlayerPlaylist from "./PlayerPlaylist";
+import PlayerGoto from "./PlayerGoto";
 
 export default [
   PlayerAppend,
@@ -14,4 +16,6 @@ export default [
   PlayerNext,
   PlayerPrevious,
   PlayerStop,
+  PlayerPlaylist,
+  PlayerGoto,
 ];

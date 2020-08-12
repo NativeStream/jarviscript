@@ -10,3 +10,5 @@ export type EMIT_PLAYER_STOP = Player;
 export type EMIT_PLAYER_APPEND = Player;
 export type EMIT_PLAYER_NEXT = Player;
 export type EMIT_PLAYER_PREVIOUS = Player;
+export type EMIT_PLAYER_GOTO = Player;
+export type EMIT_PLAYER_PLAYLIST = Player;

@@ -10,6 +10,8 @@ enum EnumCommands {
   PREVIOUS = "PREVIOUS",
   CLEAR = "CLEAR",
   STOP = "STOP",
+  QUEUE = "QUEUE",
+  GOTO = "GOTO",
 }
 
 export default {
@@ -50,6 +52,17 @@ export default {
   [EnumCommands.STOP]: (message: Message) => {
     app.notify(playerEvents.request.REQUEST_PLAYER_STOP, {
       user: message.from,
+    });
+  },
+  [EnumCommands.QUEUE]: (message: Message) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_PLAYLIST, {
+      user: message.from,
+    });
+  },
+  [EnumCommands.GOTO]: (message: Message, number: string) => {
+    app.notify(playerEvents.request.REQUEST_PLAYER_GOTO, {
+      user: message.from,
+      data: parseInt(number),
     });
   },
 };

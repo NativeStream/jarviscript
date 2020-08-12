@@ -103,8 +103,11 @@ export default class PlayerController {
     return await this.play();
   }
 
+  public static SendPlaylists(): Player {
+    return playerService.player;
+  }
+
   public static async LoadPlaylist() {}
-  public static async SendPlaylists() {}
 
   private static async loadStreamURL(song: Song): Promise<string> {
     // if (song.youtube_url){
