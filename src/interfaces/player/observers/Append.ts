@@ -12,11 +12,12 @@ class Append implements Observer {
       LoggerBuilder.ERROR("No query provided", error);
       throw error;
     }
-    const data = await PlayerController.append(query);
+    const fetched = await PlayerController.append(query);
     app.notify(events.emit.EMIT_PLAYER_APPEND, {
       ...eventData,
-      data,
+      data: fetched,
     });
+    app.notify(events.request.REQUEST_PLAYER_PLAY, eventData);
   }
 }
 

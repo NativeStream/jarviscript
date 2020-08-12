@@ -5,7 +5,10 @@ import queryFetcher from "../services/QueryFetcher";
 import { ServiceFetcherDTO } from "../services/QueryFetcher/ServiceFetcher";
 import Song from "../models/Song";
 import ytdl from "../services/YoutubeDl";
-import PlaylistEmptyError from "../errors/PlaylistEmtpyError";
+
+import PlaylistEmptyError from "../errors/PlaylistEmptyError";
+import OutOfBoundsPlaylistError from "../errors/OutOfBoundsPlaylistError";
+import player from "../index";
 
 export default class PlayerController {
   public static async append(query: string): Promise<ServiceFetcherDTO> {
@@ -17,26 +20,25 @@ export default class PlayerController {
     return fetched;
   }
 
-  public static async play() {
+  public static async play(): Promise<Player> {
     const playerInstance: Player = playerService.player;
     const index = playerInstance.index;
     let song: Song = playerInstance.songs[index];
 
     if (playerInstance.songs.length == 0) throw new PlaylistEmptyError();
 
-    if (!song || playerInstance.status == status.STOPED) {
-      playerInstance.index = 0;
-      song = playerInstance.songs[0];
-    }
-
     if (!song.stream_url) song.stream_url = await this.loadStreamURL(song);
-    await playerService.globalInstance.play(song.stream_url);
+
+    if (playerInstance.status == status.PAUSED)
+      await playerService.globalInstance.play(song.stream_url);
+    else if (playerInstance.status == status.STOPED)
+      await playerService.globalInstance.replaceSongAndPlay(song.stream_url);
 
     playerInstance.setStatusPlaying();
     return playerInstance;
   }
 
-  public static async pause() {
+  public static async pause(): Promise<Player> {
     const playerInstance: Player = playerService.player;
 
     await playerService.globalInstance.pause();
@@ -45,10 +47,62 @@ export default class PlayerController {
     return playerInstance;
   }
 
-  public static async next() {}
-  public static async previous() {}
-  public static async clear() {}
-  public static async goto() {}
+  public static async next(): Promise<Player> {
+    const playerInstance: Player = playerService.player;
+    const qtd = playerInstance.songs.length;
+    const index = playerInstance.index;
+
+    if (index >= qtd - 1) throw new OutOfBoundsPlaylistError();
+
+    playerInstance.index++;
+
+    playerInstance.setStatusStoped();
+
+    return await this.play();
+  }
+
+  public static async previous(): Promise<Player> {
+    const playerInstance: Player = playerService.player;
+    const index = playerInstance.index;
+
+    if (index <= 0) throw new OutOfBoundsPlaylistError();
+
+    playerInstance.index--;
+
+    playerInstance.setStatusStoped();
+
+    return await this.play();
+  }
+
+  public static async stop(): Promise<Player> {
+    const playerInstance: Player = playerService.player;
+    playerInstance.setStatusStoped();
+    playerInstance.index = 0;
+
+    playerService.globalInstance.pause();
+
+    return playerInstance;
+  }
+
+  public static async clear(): Promise<Player> {
+    const playerInstance: Player = playerService.player;
+    playerInstance.songs = [];
+    return await this.stop();
+  }
+
+  public static async goto(newIndex: number): Promise<Player> {
+    const playerInstance: Player = playerService.player;
+    const qtd = playerInstance.songs.length;
+
+    if (newIndex < 0 || newIndex >= qtd) throw new OutOfBoundsPlaylistError();
+
+    playerInstance.index = newIndex;
+
+    playerInstance.setStatusStoped();
+
+    return await this.play();
+  }
+
   public static async LoadPlaylist() {}
   public static async SendPlaylists() {}
 

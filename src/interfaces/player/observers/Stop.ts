@@ -2,16 +2,16 @@ import app, { Observer, EventData } from "../../../app";
 import PlayerController from "../controllers/PlayerController";
 import events from "../events";
 
-class Pause implements Observer {
-  event: string = events.request.REQUEST_PLAYER_PAUSE;
+class Stop implements Observer {
+  event: string = events.request.REQUEST_PLAYER_STOP;
   from: string;
   async callback(eventData: EventData) {
-    const player = await PlayerController.pause();
-    app.notify(events.emit.EMIT_PLAYER_PAUSE, {
+    const player = await PlayerController.stop();
+    app.notify(events.emit.EMIT_PLAYER_STOP, {
       ...eventData,
       data: player,
     });
   }
 }
 
-export default new Pause();
+export default new Stop();
