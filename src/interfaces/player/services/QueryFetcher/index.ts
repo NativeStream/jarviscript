@@ -14,8 +14,8 @@ async function searchFetcher(query: string): Promise<ServiceFetcherDTO> {
 }
 
 export default async (query: string): Promise<ServiceFetcherDTO> => {
-  for (let i: number = 0; i < services.length; i++) {
-    const service: ServiceFetcher = new services[i](query);
+  for (const serviceFetcher of services) {
+    const service: ServiceFetcher = new serviceFetcher(query);
     if (service.check()) return await fetcher(service);
   }
   return await searchFetcher(query);
