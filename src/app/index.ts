@@ -43,6 +43,7 @@ class Application implements Subject {
       LoggerBuilder.INFO("Intialization DONE!");
     } catch (error) {
       LoggerBuilder.ERROR("Failed on initializating services", error);
+      process.exit(1);
     }
   }
 
