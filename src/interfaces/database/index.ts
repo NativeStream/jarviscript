@@ -4,20 +4,27 @@ import config from "./config";
 
 class Database implements Service {
   public serviceName: string = "Mongoose";
-  public globalInstance: any;
-  public observers: Array<Observer>;
+  public globalInstance?: any;
+  public observers: Array<Observer> = [];
 
   async init(): Promise<void> {
-    let auth: string = "";
-    if (config.user && config.pass) auth = `${config.user}:${config.pass}@`;
+    this.globalInstance = this.getGlobalInstance();
+  }
 
-    const node_env = process.env.NODE_ENV || "development";
+  async getGlobalInstance() {
+    if (!this.globalInstance) {
+      let auth: string = "";
+      if (config.user && config.pass) auth = `${config.user}:${config.pass}@`;
 
-    const uri = `mongodb://${auth}${config.host}:${config.port}/${config.name}${node_env}`;
-    this.globalInstance = await connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+      const node_env = process.env.NODE_ENV || "development";
+
+      const uri = `mongodb://${auth}${config.host}:${config.port}/${config.name}${node_env}`;
+      this.globalInstance = await connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    }
+    return this.globalInstance;
   }
 }
 
