@@ -22,6 +22,7 @@ export default class PlayerController {
 
   public static async play(): Promise<Player> {
     const playerInstance: Player = playerService.player;
+
     const index = playerInstance.index;
     let song: Song = playerInstance.songs[index];
 
@@ -30,9 +31,11 @@ export default class PlayerController {
     if (!song.stream_url) song.stream_url = await this.loadStreamURL(song);
 
     if (playerInstance.status == status.PAUSED)
-      await playerService.globalInstance.play(song.stream_url);
+      await playerService.getGlobalInstance().play(song.stream_url);
     else if (playerInstance.status == status.STOPED)
-      await playerService.globalInstance.replaceSongAndPlay(song.stream_url);
+      await playerService
+        .getGlobalInstance()
+        .replaceSongAndPlay(song.stream_url);
 
     playerInstance.setStatusPlaying();
     return playerInstance;
@@ -41,7 +44,7 @@ export default class PlayerController {
   public static async pause(): Promise<Player> {
     const playerInstance: Player = playerService.player;
 
-    await playerService.globalInstance.pause();
+    await playerService.getGlobalInstance().pause();
 
     playerInstance.setStatusPaused();
     return playerInstance;
@@ -79,7 +82,7 @@ export default class PlayerController {
     playerInstance.setStatusStoped();
     playerInstance.index = 0;
 
-    playerService.globalInstance.pause();
+    playerService.getGlobalInstance().pause();
 
     return playerInstance;
   }
@@ -110,10 +113,11 @@ export default class PlayerController {
   public static async LoadPlaylist() {}
 
   private static async loadStreamURL(song: Song): Promise<string> {
-    // if (song.youtube_url){
-    const result = await ytdl.getInfoFromUrl(song.youtube_url);
-    return result.results[0].audio_stream_url;
-    // }
+    if (song.youtube_url) {
+      const result = await ytdl.getInfoFromUrl(song.youtube_url);
+      return result.results[0].audio_stream_url;
+    }
+    return "";
   }
   private static async preloadStreamURLs() {}
 }

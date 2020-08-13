@@ -5,7 +5,6 @@ import OutOfBoundsPlaylistError from "../errors/OutOfBoundsPlaylistError";
 
 class GoTo implements Observer {
   event: string = events.request.REQUEST_PLAYER_GOTO;
-  from: string;
   async callback(eventData: EventData) {
     try {
       const index = eventData.data;

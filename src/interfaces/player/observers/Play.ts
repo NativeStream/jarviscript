@@ -5,7 +5,6 @@ import PlaylistEmptyError from "../errors/PlaylistEmptyError";
 
 class Play implements Observer {
   event: string = events.request.REQUEST_PLAYER_PLAY;
-  from: string;
   async callback(eventData: EventData) {
     try {
       const player = await PlayerController.play();

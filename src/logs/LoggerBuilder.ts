@@ -15,7 +15,7 @@ const colors = {
 
 export default class LoggerBuilder {
   private text: string | Array<any>;
-  private errorHandle: Error;
+  private errorHandle?: Error;
   private logType: LogType;
 
   constructor(

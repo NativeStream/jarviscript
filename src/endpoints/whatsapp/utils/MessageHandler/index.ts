@@ -5,7 +5,11 @@ import PlayerCommands from "./PlayerCommands";
 import Miscellaneous from "./Miscellaneous";
 import Utils from "./Utils";
 
-const commands = {
+interface ICommands {
+  [key: string]: Function;
+}
+
+const commands: ICommands = {
   ...PlayerCommands,
   ...Miscellaneous,
   ...Utils,
@@ -13,9 +17,12 @@ const commands = {
 
 export default class MessageHandler {
   public static exec(message: Message, ...args: Array<string>) {
-    LoggerBuilder.DEBUG("message exec", args);
-    const command = args.shift().toUpperCase();
-    commands[command](message, ...args);
+    const command = args.shift();
+    if (command) {
+      const key = command.toUpperCase();
+      LoggerBuilder.DEBUG("Executing command from WPP:", key, args);
+      commands[key](message, ...args);
+    }
   }
 
   public static handle(message: Message) {

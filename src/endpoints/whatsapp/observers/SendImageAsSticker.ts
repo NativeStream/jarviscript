@@ -5,8 +5,9 @@ import events from "../events";
 
 class SendImageAsSticker implements Observer {
   event: string = events.WHATSAPP_SEND_IMAGE_AS_STICKER;
-  callback(eventData: EventData): void {
-    const wpp = wppInstance.globalInstance;
+
+  async callback(eventData: EventData): Promise<void> {
+    const wpp = await wppInstance.getGlobalInstance();
     const b64Image = eventData.data;
     wpp.sendImageAsSticker(eventData.user, b64Image);
   }

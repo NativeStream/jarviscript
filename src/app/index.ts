@@ -9,14 +9,15 @@ export interface Subject {
 
 export interface Observer {
   event: string;
-  callback(eventData: EventData): void;
+  callback(eventData?: EventData): void;
 }
 
 export interface Service {
-  globalInstance: any;
+  globalInstance?: any;
   observers: Array<Observer>;
   serviceName: string;
   init(): Promise<void>;
+  getGlobalInstance(): any;
 }
 
 export interface EventData {

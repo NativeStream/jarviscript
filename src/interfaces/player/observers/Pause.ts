@@ -4,7 +4,6 @@ import events from "../events";
 
 class Pause implements Observer {
   event: string = events.request.REQUEST_PLAYER_PAUSE;
-  from: string;
   async callback(eventData: EventData) {
     const player = await PlayerController.pause();
     app.notify(events.emit.EMIT_PLAYER_PAUSE, {

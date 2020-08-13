@@ -4,7 +4,6 @@ import events from "../events";
 
 class Stop implements Observer {
   event: string = events.request.REQUEST_PLAYER_STOP;
-  from: string;
   async callback(eventData: EventData) {
     const player = await PlayerController.stop();
     app.notify(events.emit.EMIT_PLAYER_STOP, {

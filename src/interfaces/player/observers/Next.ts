@@ -6,7 +6,6 @@ import LoggerBuilder from "../../../logs/LoggerBuilder";
 
 class Next implements Observer {
   event: string = events.request.REQUEST_PLAYER_NEXT;
-  from: string;
   async callback(eventData: EventData): Promise<void> {
     try {
       const player = await PlayerController.next();

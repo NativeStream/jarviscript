@@ -1,7 +1,11 @@
 import app from "../../../../app";
 import serviceEvents from "../../events";
 
-const events = {
+interface IEvents {
+  [key: string]: Function;
+}
+
+const events: IEvents = {
   "eof-reached": (value: any) => {
     if (value) app.notify(serviceEvents.request.REQUEST_PLAYER_NEXT);
   },

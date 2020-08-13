@@ -5,7 +5,6 @@ import OutOfBoundsPlaylistError from "../errors/OutOfBoundsPlaylistError";
 
 class Previous implements Observer {
   event: string = events.request.REQUEST_PLAYER_PREVIOUS;
-  from: string;
   async callback(eventData: EventData): Promise<void> {
     try {
       const player = await PlayerController.previous();

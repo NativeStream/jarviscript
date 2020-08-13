@@ -5,8 +5,8 @@ import events from "../events";
 
 class SocketSend implements Observer {
   event: string = events.SOCKET_SEND;
-  callback(eventData: EventData): void {
-    const socket = socketIO.globalInstance;
+  async callback(eventData: EventData): Promise<void> {
+    const socket = await socketIO.getGlobalInstance();
     LoggerBuilder.DEBUG("Socket send:", eventData);
     socket.emit("message", eventData);
   }

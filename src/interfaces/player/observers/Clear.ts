@@ -4,7 +4,6 @@ import events from "../events";
 
 class Clear implements Observer {
   event: string = events.request.REQUEST_PLAYER_CLEAR;
-  from: string;
   async callback(eventData: EventData) {
     const player = await PlayerController.clear();
     app.notify(events.emit.EMIT_PLAYER_CLEAR, {

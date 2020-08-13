@@ -1,7 +1,8 @@
 import config from "./config";
 import { registerEvents } from "./Events";
 
-import * as mpvAPI from "node-mpv";
+// @ts-ignore
+import mpvAPI from "node-mpv";
 
 export class MPVError extends Error {
   public errorCode: number;
