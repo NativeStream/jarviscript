@@ -1,3 +1,5 @@
+import Song from "./Song";
+
 export enum status {
   PLAYING = "PLAYING",
   PAUSED = "PAUSED",
@@ -6,8 +8,9 @@ export enum status {
 
 export default class Player {
   public index: number = 0;
-  public songs: Array<any> = [];
+  public songs: Array<Song> = [];
   public status: status = status.STOPED;
+  public preLoading: boolean = false;
 
   setStatusPlaying() {
     this.status = status.PLAYING;

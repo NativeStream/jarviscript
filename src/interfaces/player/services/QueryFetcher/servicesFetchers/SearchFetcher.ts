@@ -1,7 +1,7 @@
 import ServiceFetcher from "../ServiceFetcher";
 import Song from "../../../models/Song";
-import request from "request";
 import { ServiceFetcherDTO } from "../ServiceFetcher";
+import youtube from "scrape-youtube";
 
 class SearchFetcher extends ServiceFetcher {
   public serviceName: string = "Youtube Search";
@@ -19,8 +19,14 @@ class SearchFetcher extends ServiceFetcher {
   }
 
   async fetch(): Promise<ServiceFetcherDTO> {
-    await request.get(this.query);
-    throw new Error("Method not implemented.");
+    const response = await youtube.searchOne(this.query);
+    if (response)
+      return {
+        qtd_added: 1,
+        songs: [{ title: response.title, youtube_url: response.link }],
+        service_name: this.serviceName,
+      };
+    throw new Error("Youtube Search Error");
   }
 }
 

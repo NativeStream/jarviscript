@@ -8,11 +8,13 @@ import Stop from "./Stop";
 import Clear from "./Clear";
 import Goto from "./Goto";
 import RequestPlaylist from "./RequestPlaylist";
+import NextAuto from "./NextAuto";
 
 export default [
   Play,
   Pause,
   Next,
+  NextAuto,
   Previous,
   Append,
   Status,

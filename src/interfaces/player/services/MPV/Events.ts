@@ -7,7 +7,7 @@ interface IEvents {
 
 const events: IEvents = {
   "eof-reached": (value: any) => {
-    if (value) app.notify(serviceEvents.request.REQUEST_PLAYER_NEXT);
+    if (value) app.notify(serviceEvents.request.REQUEST_PLAYER_NEXT_AUTO);
   },
   // pause: (value: any) => {
   //   if (value) app.notify("PLAYER_PAUSE");

@@ -1,14 +1,13 @@
 import Player, { status } from "../models/Player";
 import playerService from "../index";
-import LoggerBuilder from "../../../logs/LoggerBuilder";
 import queryFetcher from "../services/QueryFetcher";
 import { ServiceFetcherDTO } from "../services/QueryFetcher/ServiceFetcher";
 import Song from "../models/Song";
-import ytdl from "../services/YoutubeDl";
+
+import StreamUrlUtils from "../utils/StreamUrlUtils";
 
 import PlaylistEmptyError from "../errors/PlaylistEmptyError";
 import OutOfBoundsPlaylistError from "../errors/OutOfBoundsPlaylistError";
-import player from "../index";
 
 export default class PlayerController {
   public static async append(query: string): Promise<ServiceFetcherDTO> {
@@ -17,6 +16,7 @@ export default class PlayerController {
     for (const song of fetched.songs) {
       playerInstance.songs.push(song);
     }
+    StreamUrlUtils.preloadStreamURLs();
     return fetched;
   }
 
@@ -28,14 +28,12 @@ export default class PlayerController {
 
     if (playerInstance.songs.length == 0) throw new PlaylistEmptyError();
 
-    if (!song.stream_url) song.stream_url = await this.loadStreamURL(song);
+    const streamUrl = await StreamUrlUtils.loadStreamUrl(song);
 
     if (playerInstance.status == status.PAUSED)
-      await playerService.getGlobalInstance().play(song.stream_url);
+      await playerService.getGlobalInstance().play(streamUrl);
     else if (playerInstance.status == status.STOPED)
-      await playerService
-        .getGlobalInstance()
-        .replaceSongAndPlay(song.stream_url);
+      await playerService.getGlobalInstance().replaceSongAndPlay(streamUrl);
 
     playerInstance.setStatusPlaying();
     return playerInstance;
@@ -111,13 +109,4 @@ export default class PlayerController {
   }
 
   public static async LoadPlaylist() {}
-
-  private static async loadStreamURL(song: Song): Promise<string> {
-    if (song.youtube_url) {
-      const result = await ytdl.getInfoFromUrl(song.youtube_url);
-      return result.results[0].audio_stream_url;
-    }
-    return "";
-  }
-  private static async preloadStreamURLs() {}
 }
