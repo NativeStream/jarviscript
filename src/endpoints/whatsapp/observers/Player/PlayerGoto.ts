@@ -11,7 +11,7 @@ class PlayerPlay implements Observer {
     const song = data.songs[data.index];
     const message = `Playing now: *${song.title}*`;
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });

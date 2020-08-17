@@ -7,7 +7,7 @@ class PlayerPause implements Observer {
   callback(eventData: EventData): void {
     const message = "Paused";
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });

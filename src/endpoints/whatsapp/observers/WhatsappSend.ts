@@ -2,6 +2,7 @@ import { Observer, EventData } from "../../../app";
 import wppInstance from "..";
 import LoggerBuilder from "../../../logs/LoggerBuilder";
 import events from "../events";
+import wppService from "../";
 
 class WhatsappSend implements Observer {
   event: string = events.WHATSAPP_SEND;

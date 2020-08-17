@@ -4,7 +4,7 @@ import events from "../events";
 class SendStatus implements Observer {
   event: string = "SEND_STATUS";
   callback(eventData: EventData): void {
-    app.notify(events.WHATSAPP_SEND, eventData);
+    app.notify(events.WHATSAPP_RESPONSE, eventData);
   }
 }
 

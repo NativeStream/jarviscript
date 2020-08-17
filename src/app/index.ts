@@ -24,6 +24,7 @@ export interface EventData {
   user?: any;
   data?: any;
   event?: string;
+  from: string;
 }
 
 class Application implements Subject {

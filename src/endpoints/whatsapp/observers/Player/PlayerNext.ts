@@ -11,7 +11,7 @@ class PlayerNext implements Observer {
     const song = data.songs[data.index];
     const message = `Playing next: *${song.title}*`;
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });

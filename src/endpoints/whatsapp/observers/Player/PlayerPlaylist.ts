@@ -18,7 +18,7 @@ class PlayerPlay implements Observer {
       message += "\n";
     });
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });

@@ -17,6 +17,7 @@ class Websocket implements Service {
         LoggerBuilder.DEBUG("Socket recived:", recived);
         app.notify(recived.event, {
           data: recived.data,
+          from: this.serviceName,
         });
       });
     });

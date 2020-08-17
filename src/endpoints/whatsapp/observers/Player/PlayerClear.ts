@@ -7,7 +7,7 @@ class PlayerClear implements Observer {
   callback(eventData: EventData): void {
     const message = `Playlist cleared.`;
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });

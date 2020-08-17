@@ -3,6 +3,7 @@ import LoggerBuilder from "../../logs/LoggerBuilder";
 import { REQUEST_CLI_QUERY } from "../../interfaces/cli/events/types";
 import cliEvents from "../../interfaces/cli/events";
 import app from "../../app";
+import wppService from "./index";
 
 interface IEvent<callback> {
   [propery: string]: callback;
@@ -35,6 +36,7 @@ const events: IEvent<Function> = {
 
     app.notify(cliEvents.request.REQUEST_CLI_QUERY, {
       user: message.from,
+      from: wppService.serviceName,
       data,
     });
   },

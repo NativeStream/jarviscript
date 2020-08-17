@@ -14,7 +14,7 @@ class PlayerAppend implements Observer {
       message += `*${qtd}* songs added of playlist *${data.playlist_name}*.\n`;
     else message += `Song *${data.songs[0].title}* added.`;
 
-    app.notify(events.WHATSAPP_SEND, {
+    app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
     });
