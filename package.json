@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev ts-node-dev src/main.ts",
-    "build": "cross-env NODE_ENV=prod tsc"
+    "build": "cross-env NODE_ENV=prod tsc",
+    "build:rpi": "cross-env NODE_ENV=prod tsc && cp ./browser.js node_modules/@open-wa/wa-automate/dist/controllers/browser.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
