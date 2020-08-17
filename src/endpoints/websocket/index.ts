@@ -1,7 +1,10 @@
 import * as socketIO from "socket.io";
 import app, { Service, Observer } from "../../app";
+import UserController from "../../app/controllers/UserController";
+import { RegisterUser } from "../../app/models/User";
 import LoggerBuilder from "../../logs/LoggerBuilder";
 import observers from "./observers";
+import events from "./events";
 
 class Websocket implements Service {
   public serviceName: string = "Websocket";
@@ -20,9 +23,25 @@ class Websocket implements Service {
           from: this.serviceName,
         });
       });
+
+      socket.on("register", async (newUser: RegisterUser) => {
+        let data;
+        try {
+          data = await UserController.register(newUser);
+        } catch (error) {
+          data = error;
+        }
+
+        app.notify(events.SOCKET_SEND, {
+          from: this.serviceName,
+          data,
+        });
+      });
     });
 
-    this.globalInstance.listen(3000);
+    const port = parseInt(process.env.WEBSOCKET_PORT || "8081");
+
+    this.globalInstance.listen(port);
   }
 
   async getGlobalInstance(): Promise<socketIO.Server> {

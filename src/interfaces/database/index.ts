@@ -1,7 +1,5 @@
 import { connect } from "mongoose";
 import { Service, Observer } from "../../app";
-import config from "./config";
-
 class Database implements Service {
   public serviceName: string = "Mongoose";
   public globalInstance?: any;
@@ -13,12 +11,9 @@ class Database implements Service {
 
   async getGlobalInstance() {
     if (!this.globalInstance) {
-      let auth: string = "";
-      if (config.user && config.pass) auth = `${config.user}:${config.pass}@`;
+      const uri =
+        process.env.DATABASE_URL || "mongodb://localhost:27017/jarvis";
 
-      const node_env = process.env.NODE_ENV || "development";
-
-      const uri = `mongodb://${auth}${config.host}:${config.port}/${config.name}${node_env}`;
       this.globalInstance = await connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,

@@ -10,7 +10,8 @@ class WhatsappSend implements Observer {
     const wpp = await wppInstance.getGlobalInstance();
     const message = eventData.data.message;
     LoggerBuilder.DEBUG("Wpp send:", eventData);
-    if (eventData.user) wpp.sendText(eventData.user, message);
+    const user = eventData.user;
+    if (user?.whatsapp) wpp.sendText(user.whatsapp, message);
   }
 }
 

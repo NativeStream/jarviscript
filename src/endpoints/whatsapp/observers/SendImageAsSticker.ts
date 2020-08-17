@@ -9,7 +9,8 @@ class SendImageAsSticker implements Observer {
   async callback(eventData: EventData): Promise<void> {
     const wpp = await wppInstance.getGlobalInstance();
     const b64Image = eventData.data;
-    wpp.sendImageAsSticker(eventData.user, b64Image);
+    const user = eventData.user;
+    if (user?.whatsapp) wpp.sendImageAsSticker(user.whatsapp, b64Image);
   }
 }
 

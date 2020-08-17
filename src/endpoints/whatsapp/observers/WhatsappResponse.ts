@@ -10,8 +10,9 @@ class WhatsappResponse implements Observer {
     if (wppService.serviceName == eventData.from) {
       const wpp = await wppInstance.getGlobalInstance();
       const message = eventData.data.message;
-      LoggerBuilder.DEBUG("Wpp send:", eventData);
-      if (eventData.user) wpp.sendText(eventData.user, message);
+      LoggerBuilder.DEBUG(events.WHATSAPP_RESPONSE, eventData);
+      const number = eventData?.user?.whatsapp;
+      if (number) wpp.sendText(number, message);
     }
   }
 }

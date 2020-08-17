@@ -4,6 +4,8 @@ import { REQUEST_CLI_QUERY } from "../../interfaces/cli/events/types";
 import cliEvents from "../../interfaces/cli/events";
 import app from "../../app";
 import wppService from "./index";
+import UserController from "../../app/controllers/UserController";
+import User from "../../app/models/User";
 
 interface IEvent<callback> {
   [propery: string]: callback;
@@ -23,8 +25,10 @@ const events: IEvent<Function> = {
   onGlobalParicipantsChanged: (participantChangedEvent: any) => {},
   onIncomingCall: (call: any) => {},
   // onLiveLocation: (liveLocationChangedEvent: any) => {},
-  onMessage: (message: Message) => {
-    LoggerBuilder.DEBUG("Only message recived:", message.body);
+  onMessage: async (message: Message) => {
+    LoggerBuilder.DEBUG("Whatsapp onMessageRecived:", {
+      message: message.body,
+    });
 
     const body = message.body;
     const caption = message.caption;
@@ -34,8 +38,17 @@ const events: IEvent<Function> = {
       body: message,
     };
 
+    let user;
+    try {
+      user = await UserController.getUserFromWhatsapp(message.from);
+    } catch (error) {
+      user = UserController.getWhatsappAnonymousGuestUser(message.from);
+    }
+
+    LoggerBuilder.DEBUG("Whatsapp Event Handler", { user });
+
     app.notify(cliEvents.request.REQUEST_CLI_QUERY, {
-      user: message.from,
+      user,
       from: wppService.serviceName,
       data,
     });

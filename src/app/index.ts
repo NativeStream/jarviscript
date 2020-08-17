@@ -1,5 +1,6 @@
 import services from "./ServiceRegister";
 import LoggerBuilder from "../logs/LoggerBuilder";
+import { IUser } from "./models/User";
 
 export interface Subject {
   registerObserver(o: Observer): void;
@@ -21,7 +22,7 @@ export interface Service {
 }
 
 export interface EventData {
-  user?: any;
+  user?: IUser;
   data?: any;
   event?: string;
   from: string;

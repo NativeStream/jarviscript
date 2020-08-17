@@ -61,10 +61,7 @@ export default class LoggerBuilder {
   }
 
   private log(): void {
-    if (
-      this.logType == LogType.DEBUG &&
-      process.env.NODE_ENV == "development"
-    ) {
+    if (this.logType == LogType.DEBUG && process.env.NODE_ENV == "dev") {
       if (this.text instanceof Array) console.log(...this.text);
     } else if (this.logType != LogType.DEBUG) console.log(this.text);
 

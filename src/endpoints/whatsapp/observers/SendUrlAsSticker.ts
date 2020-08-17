@@ -7,7 +7,8 @@ class SendUrlAsSticker implements Observer {
   async callback(eventData: EventData): Promise<void> {
     const wpp = await wppInstance.getGlobalInstance();
     const url = eventData.data;
-    wpp.sendStickerfromUrl(eventData.user, url);
+    const user = eventData.user;
+    if (user?.whatsapp) wpp.sendStickerfromUrl(user.whatsapp, url);
   }
 }
 

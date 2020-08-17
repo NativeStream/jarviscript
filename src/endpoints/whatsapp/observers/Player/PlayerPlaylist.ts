@@ -18,6 +18,8 @@ class PlayerPlay implements Observer {
       message += "\n";
     });
 
+    if (data.songs.length == 0) message = "Playlist empty.";
+
     app.notify(events.WHATSAPP_RESPONSE, {
       ...eventData,
       data: { message },
