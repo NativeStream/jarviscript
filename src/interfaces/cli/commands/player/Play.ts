@@ -1,13 +1,32 @@
 import { EventData } from "../../../../app";
 import Command, { iEventDatas } from "../../classes/Command";
+import playerEvents from "../../../../interfaces/player/events";
 
 class Play extends Command {
-  public help: string = "";
+  public help: string =
+    "Adiciona uma música ou dá play se nenhuma for informada";
   public validate(eventData: EventData, args: string): boolean {
-    throw new Error("Method not implemented.");
+    return true;
   }
-  public retrive(eventData: EventData, args: string): Promise<iEventDatas> {
-    throw new Error("Method not implemented.");
+  public async retrive(
+    eventData: EventData,
+    args: string
+  ): Promise<iEventDatas> {
+    if (args) {
+      return {
+        eventData: {
+          ...eventData,
+          data: {
+            query: args,
+          },
+        },
+        event: playerEvents.request.REQUEST_PLAYER_APPEND,
+      };
+    }
+    return {
+      eventData,
+      event: playerEvents.request.REQUEST_PLAYER_PLAY,
+    };
   }
 }
 

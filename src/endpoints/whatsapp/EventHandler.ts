@@ -1,5 +1,4 @@
 import { Message, Chat } from "@open-wa/wa-automate";
-import MessageHandler from "./utils/MessageHandler";
 import LoggerBuilder from "../../logs/LoggerBuilder";
 import { REQUEST_CLI_QUERY } from "../../interfaces/cli/events/types";
 import cliEvents from "../../interfaces/cli/events";

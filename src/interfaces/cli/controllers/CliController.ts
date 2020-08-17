@@ -18,10 +18,12 @@ export default class CliController {
 
   public async exec() {
     const match = this.query.match(
-      /(?<command>(?<=^[\.\-!]).[^ ]+)((?: )(?<query>.+))?/
+      /(?<command>(?<=^[\.\-!]).[^ ]{0,})((?: )(?<query>.+))?/
     );
     const command = match?.groups?.command?.toUpperCase();
     const query = match?.groups?.query || "";
+
+    LoggerBuilder.DEBUG("Command recived", { command, query });
 
     if (command && commands[command]) {
       const executor = commands[command];
