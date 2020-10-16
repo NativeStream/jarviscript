@@ -8,7 +8,7 @@ class Whatsapp implements Service {
   public observers: Array<Observer> = observers;
   public serviceName: string = "Whatsapp";
   private config: ConfigObject = {
-    executablePath: process.env.EXECUTABLE_CHROMIUM_PATH || "",
+    executablePath: "/usr/bin/chromium-browser",
   };
 
   public async init(): Promise<void> {
