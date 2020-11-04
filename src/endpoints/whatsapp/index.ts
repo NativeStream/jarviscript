@@ -8,7 +8,8 @@ class Whatsapp implements Service {
   public observers: Array<Observer> = observers;
   public serviceName: string = "Whatsapp";
   private config: ConfigObject = {
-    executablePath: "/usr/bin/chromium-browser",
+    executablePath: "/usr/bin/google-chrome-stable",
+    sessionDataPath: "/session/session.data.json"
   };
 
   public async init(): Promise<void> {
