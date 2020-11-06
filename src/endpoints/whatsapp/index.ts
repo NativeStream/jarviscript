@@ -8,8 +8,10 @@ class Whatsapp implements Service {
   public observers: Array<Observer> = observers;
   public serviceName: string = "Whatsapp";
   private config: ConfigObject = {
-    executablePath: "/usr/bin/google-chrome-stable",
-    sessionDataPath: "/session/session.data.json"
+    executablePath: process.env.CHROMIUM,
+    sessionDataPath: "/session/session.data.json",
+    disableSpins: true,
+    // popup: 8001
   };
 
   public async init(): Promise<void> {
@@ -21,6 +23,9 @@ class Whatsapp implements Service {
   }
 
   async getGlobalInstance(): Promise<Client> {
+    if (!this.config.executablePath)
+      delete this.config.executablePath;
+
     if (!this.globalInstance) this.globalInstance = await create(this.config);
     return this.globalInstance;
   }

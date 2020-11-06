@@ -24,7 +24,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@open-wa/wa-automate": "^2.1.5",
+    "@open-wa/wa-automate": "^2.1.6",
     "@open-wa/wa-decrypt": "^2.0.1",
     "bcrypt": "^5.0.0",
     "cross-env": "^7.0.2",
