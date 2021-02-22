@@ -22,7 +22,9 @@ export class WhatsappService extends AbstractService {
     popup: parseInt(process.env?.WA_POPUP || "8082"),
     autoRefresh: true,
     qrPopUpOnly: true,
-    sessionDataPath: path.join(__dirname, "src/session/session.data.json")
+    sessionDataPath: path.join(__dirname, "src/session/session.data.json"),
+    executablePath: process.env.CHROMIUM_PATH,
+    chromiumArgs: ["--no-sandbox"],
   };
   public qrCode?: string;
   private wppEventListeners?: WhatsappeventListeners;
@@ -35,6 +37,8 @@ export class WhatsappService extends AbstractService {
         client,
         this.logger
       );
+    }).catch((error) => {
+      console.log("Error spawning");
     });
   }
 
