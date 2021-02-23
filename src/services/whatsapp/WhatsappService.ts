@@ -20,11 +20,9 @@ export class WhatsappService extends AbstractService {
     disableSpins: true,
     qrLogSkip: true,
     popup: parseInt(process.env?.WA_POPUP || "8082"),
-    // autoRefresh: true,
-    // qrPopUpOnly: true,
+    qrTimeout: 0,
     sessionDataPath: path.join(__dirname, "src/session/session.data.json"),
-    // executablePath: process.env.CHROMIUM_PATH,
-    chromiumArgs: ["--no-sandbox"],
+    stickerServerEndpoint: false
   };
   public qrCode?: string;
   private wppEventListeners?: WhatsappeventListeners;
@@ -33,12 +31,7 @@ export class WhatsappService extends AbstractService {
     this.listenEventsWA();
     create(this.config).then((client) => {
       this.wppInstance = client;
-      this.wppEventListeners = new WhatsappeventListeners(
-        client,
-        this.logger
-      );
-    }).catch((error) => {
-      console.log("Error spawning", error);
+      this.wppEventListeners = new WhatsappeventListeners(client, this.logger);
     });
   }
 
@@ -49,7 +42,10 @@ export class WhatsappService extends AbstractService {
   }
 
   private listenEventsWA() {
-    const socket = ioClient.connect(`http://localhost:${this.config.popup}`);
+    const socket = ioClient.connect("http://localhost:8082", {
+      reconnection: true,
+    });
+    
     socket.on("message", (message: any) => {
       if (message.namespace == "qr") {
         this.emitQRCode(message.data);

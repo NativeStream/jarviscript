@@ -15,7 +15,7 @@ export class WhatsappeventListeners {
     onChatOpened: (chat: Chat) => {},
     // onChatState: (chatState: any) => {}, // paid feature
     // onContactAdded: (data: any) => {}, // paid feature
-    onGlobalParicipantsChanged: (participantChangedEvent: any) => {},
+    // onGlobalParicipantsChanged: (participantChangedEvent: any) => {},
     onIncomingCall: (call: any) => {},
     // onLiveLocation: (liveLocationChangedEvent: any) => {},
     onMessage,
