@@ -2,7 +2,7 @@
   "name": "jarviscript",
   "version": "1.0.0",
   "description": "An smarthouse hub",
-  "main": "index.js",
+  "main": "src/main.ts",
   "repository": "https://github.com/NativeStream/jarviscript",
   "author": "NativeStream",
   "license": "MIT",
@@ -10,7 +10,8 @@
     "dev": "cross-env NODE_ENV=dev ts-node-dev src/main.ts",
     "dev:electron": "cross-env NODE_ENV=dev electron src/main.ts",
     "build": "cross-env NODE_ENV=prod tsc",
-    "start": "node ./dist/main.js"
+    "start": "node ./dist/main.js",
+    "version": "tsc --version"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -23,11 +24,11 @@
     "jest": "^26.2.2",
     "ts-jest": "^26.1.4",
     "ts-node-dev": "^1.0.0-pre.56",
-    "typescript": "^3.9.7"
+    "typescript": "^4.1.5"
   },
   "dependencies": {
-    "@open-wa/wa-automate": "^2.1.6",
-    "@open-wa/wa-decrypt": "^2.0.1",
+    "@open-wa/wa-automate": "^3.6.3",
+    "@open-wa/wa-decrypt": "^3.0.1",
     "bcrypt": "^5.0.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",

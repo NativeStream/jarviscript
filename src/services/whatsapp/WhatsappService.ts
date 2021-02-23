@@ -1,6 +1,6 @@
 import { WhatsappeventListeners } from "./src/WhatsappEventListeners";
 import { AppSubject } from "./../../AppSubject";
-import { Client, ConfigObject, create, QRFormat } from "@open-wa/wa-automate";
+import { Client, ConfigObject, create } from "@open-wa/wa-automate";
 import { LoggerColors } from "../../logs/LoggerColors";
 import { AbstractService, Service } from "../../resources/Service";
 import * as ioClient from "socket.io-client";
@@ -20,10 +20,10 @@ export class WhatsappService extends AbstractService {
     disableSpins: true,
     qrLogSkip: true,
     popup: parseInt(process.env?.WA_POPUP || "8082"),
-    autoRefresh: true,
-    qrPopUpOnly: true,
+    // autoRefresh: true,
+    // qrPopUpOnly: true,
     sessionDataPath: path.join(__dirname, "src/session/session.data.json"),
-    executablePath: process.env.CHROMIUM_PATH,
+    // executablePath: process.env.CHROMIUM_PATH,
     chromiumArgs: ["--no-sandbox"],
   };
   public qrCode?: string;
@@ -38,7 +38,7 @@ export class WhatsappService extends AbstractService {
         this.logger
       );
     }).catch((error) => {
-      console.log("Error spawning");
+      console.log("Error spawning", error);
     });
   }
 
