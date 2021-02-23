@@ -1,16 +1,14 @@
 import { Socket } from "socket.io";
-import { IEvent } from "../../../interfaces/IEvent";
+import { AbstractEvent } from "../../../resources/AbstractEvent";
 
-export const UserConnectWebsocket: IEvent = {
-  event: "USER_CONNECT_WEBSOCKET_EVENT",
-  type: {} as {
-    socket: Socket;
-  },
-};
+export class UserConnectedWebsocketEvent extends AbstractEvent {
+  constructor(public data: Socket) {
+    super();
+  }
+}
 
-export const UserDisconnectWebsocket: IEvent = {
-  event: "USER_DISCONNECT_WEBSOCKET_EVENT",
-  type: {} as {
-    socket: Socket;
-  },
-};
+export class UserDisconnectedWebsocketEvent extends AbstractEvent {
+  constructor(public data: Socket) {
+    super();
+  }
+}

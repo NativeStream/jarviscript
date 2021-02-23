@@ -1,3 +1,4 @@
+import { NewQrCodeWhatsappEvent } from "./types/index";
 import { WhatsappeventListeners } from "./src/WhatsappEventListeners";
 import { AppSubject } from "./../../AppSubject";
 import { Client, ConfigObject, create } from "@open-wa/wa-automate";
@@ -5,9 +6,7 @@ import { LoggerColors } from "../../logs/LoggerColors";
 import { AbstractService, Service } from "../../resources/Service";
 import * as ioClient from "socket.io-client";
 import observers from "./observers";
-import { NewQrCodeWhatsapp } from "./types";
-import { EventBus } from "../../resources/EventBus";
-import path from "path";
+import env from "../../environment";
 
 @Service({
   serviceName: "Whatsapp",
@@ -19,10 +18,10 @@ export class WhatsappService extends AbstractService {
   private config: ConfigObject = {
     disableSpins: true,
     qrLogSkip: true,
-    popup: parseInt(process.env?.WA_POPUP || "8082"),
+    popup: env.whatsapp.popupPort,
     qrTimeout: 0,
-    sessionDataPath: path.join(__dirname, "src/session/session.data.json"),
-    stickerServerEndpoint: false
+    sessionDataPath: env.whatsapp.sessionPath,
+    stickerServerEndpoint: false,
   };
   public qrCode?: string;
   private wppEventListeners?: WhatsappeventListeners;
@@ -35,26 +34,22 @@ export class WhatsappService extends AbstractService {
     });
   }
 
-  private emitQRCode(image: string) {
-    AppSubject.getInstance().notify<typeof NewQrCodeWhatsapp.type>(
-      new EventBus(NewQrCodeWhatsapp, { qrCode: image })
-    );
+  private emitQRCode(qrCodeB64: string) {
+    AppSubject.getInstance().notify(new NewQrCodeWhatsappEvent({ qrCodeB64 }));
   }
 
   private listenEventsWA() {
-    const socket = ioClient.connect("http://localhost:8082", {
+    const socket = ioClient.connect(`http://localhost:${this.config.popup}`, {
       reconnection: true,
     });
-    
+
     socket.on("message", (message: any) => {
       if (message.namespace == "qr") {
         this.emitQRCode(message.data);
         this.qrCode = message.data;
       }
-      if (message.namespace == "STARTUP" && message.data == "SUCESS") {
-        socket.close();
+      if (message.namespace == "STARTUP" && message.data == "SUCESS")
         this.qrCode = undefined;
-      }
     });
   }
 }

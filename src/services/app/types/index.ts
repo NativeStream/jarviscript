@@ -1,15 +1,13 @@
-import { IEvent } from './../../../interfaces/IEvent';
+import { AbstractEvent } from '../../../resources/AbstractEvent';
 
-export const SystemMessage: IEvent = {
-  event: "SYSTEM_MESSAGE_EVENT",
-  type: {} as {
-    message: string;
+export class SystemMessageEvent extends AbstractEvent {
+  public data: string;
+  constructor(message: string) {
+    super();
+    this.data = message;
   }
 }
 
-export const SystemStart: IEvent = {
-  event: "SYSTEM_START_EVENT",
-  type: {} as {
-    message: string;
-  }
+export class SystemStartEvent extends AbstractEvent {
+  public data?: any = undefined;
 }

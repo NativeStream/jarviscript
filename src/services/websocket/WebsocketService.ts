@@ -1,10 +1,13 @@
-import { UserConnectWebsocket, UserDisconnectWebsocket } from "./types/index";
+import {
+  UserConnectedWebsocketEvent,
+  UserDisconnectedWebsocketEvent,
+} from "./types/index";
 import { AppSubject } from "./../../AppSubject";
 import * as socketIO from "socket.io";
 import { LoggerColors } from "../../logs/LoggerColors";
 import { AbstractService, Service } from "../../resources/Service";
 import observers from "./observers";
-import { EventBus } from "../../resources/EventBus";
+import env from "../../environment";
 
 @Service({
   observers,
@@ -14,29 +17,20 @@ import { EventBus } from "../../resources/EventBus";
 export class WebsocketService extends AbstractService {
   private socketOptions: socketIO.ServerOptions = {};
   public io: socketIO.Server = socketIO.default(this.socketOptions);
-  private socketPort = parseInt(process.env.WEBSOCKET_PORT || "8081");
+  private socketPort = env.websocket.port;
 
   public async init(): Promise<any> {
     this.io.sockets.on("connection", (socket: socketIO.Socket) => {
-      socket.on("event", (data: EventBus) => {
+      socket.on("event", (data: any) => {
         data.client = { socket };
         AppSubject.getInstance().notify(data);
       });
 
-      AppSubject.getInstance().notify(
-        new EventBus<typeof UserConnectWebsocket.type>(
-          UserConnectWebsocket,
-          { socket },
-          { socket }
-        )
-      );
+      AppSubject.getInstance().notify(new UserConnectedWebsocketEvent(socket));
 
       socket.on("disconnect", () => {
         AppSubject.getInstance().notify(
-          new EventBus<typeof UserDisconnectWebsocket.type>(
-            UserDisconnectWebsocket,
-            {}
-          )
+          new UserDisconnectedWebsocketEvent(socket)
         );
       });
     });

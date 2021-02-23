@@ -1,5 +1,5 @@
 import { LoggerBuilder } from './logs/LoggerBuilder';
-import { EventBus } from './resources/EventBus';
+import { AbstractEvent } from './resources/AbstractEvent';
 import { AbstractObserver } from "./resources/Observer";
 
 export class AppSubject {
@@ -23,11 +23,11 @@ export class AppSubject {
     );
   }
 
-  public async notify<T = any>(eventBus: EventBus<T>) {
-    LoggerBuilder.INFO("Recived: ", { event: eventBus.event }).log();
+  public async notify(event: AbstractEvent) {
+    LoggerBuilder.INFO("Recived: ", { event: event.constructor.name }).log();
     for (let observer of this.observers) {
-      if (observer.event === eventBus.event) {
-        observer.callback(eventBus);
+      if (event instanceof observer.event) {
+        observer.callback(event);
       }
     }
   }

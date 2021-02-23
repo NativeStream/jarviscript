@@ -1,7 +1,6 @@
-import { EventBus } from './EventBus';
 import { LoggerService } from "../logs/LoggerService";
+import { AbstractEvent } from "./AbstractEvent";
 import { AbstractService } from "./Service";
-import { IEvent } from '../interfaces/IEvent';
 
 const SINGLETON_KEY = Symbol();
 
@@ -15,14 +14,14 @@ type Observer<T extends new (...args: any[]) => any> = T & {
 };
 
 export interface IObserver {
-  event: IEvent;
-  callback(eventBus: EventBus): Promise<any>;
+  event: typeof AbstractEvent;
+  callback(event: AbstractEvent): Promise<any>;
 }
 
 export abstract class AbstractObserver<T = any> implements IObserver {
+  abstract event: typeof AbstractEvent;
   private extensor = (this as unknown) as IObserverExtensor;
-  abstract event: IEvent;
-  abstract callback(eventBus: EventBus): Promise<any>;
+  abstract callback(event: AbstractEvent): Promise<any>;
   public get logger() {
     return this.extensor._logger;
   }

@@ -1,8 +1,7 @@
-import { SystemStart } from './services/app/types/index';
+import { SystemStartEvent } from './services/app/types/index';
 import { AppSubject } from "./AppSubject";
 import { LoggerBuilder } from "./logs/LoggerBuilder";
 import services from "./services";
-import { EventBus } from './resources/EventBus';
 
 export class App {
   readonly appSubject: AppSubject = AppSubject.getInstance();
@@ -31,9 +30,6 @@ export class App {
   }
 
   private emitSystemStartEvent() {
-    this.appSubject.notify<typeof SystemStart.type>(new EventBus(
-      SystemStart,
-      { message: "System initialized." }
-    ));
+    this.appSubject.notify(new SystemStartEvent());
   }
 }

@@ -1,13 +1,15 @@
-import { IEvent } from "../../../interfaces/IEvent";
+import { AbstractEvent } from "../../../resources/AbstractEvent";
 
-export const NewQrCodeWhatsapp: IEvent = {
-  event: "NEW_QR_CODE_WHATSAPP_EVENT",
-  type: {} as {
-    qrCode: String;
+
+interface iNewQrCodeWhatsappEvent {
+  qrCodeB64: string;
+}
+export class NewQrCodeWhatsappEvent extends AbstractEvent {
+  constructor(public data?: iNewQrCodeWhatsappEvent) {
+    super();
   }
 }
 
-export const RequestQrCodeWhatsapp: IEvent = {
-  event: "REQUEST_WHATSAPP_EVENT",
-  type: {}
+export class RequestQrCodeWhatsappEvent extends AbstractEvent {
+  public data?: any;
 }
