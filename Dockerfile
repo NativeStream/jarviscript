@@ -20,4 +20,7 @@ COPY . /usr/src/app
 RUN npm install 
 RUN npm run build
 
+RUN mkdir /session
+ENV SESSION_PATH=/session/session.data.json
+
 CMD [ "npm", "run", "start" ]

@@ -1,4 +1,4 @@
-import { WhatsappService } from './../../WhatsappService';
+import { WhatsappService } from "./../../WhatsappService";
 import { decryptMedia, Message } from "@open-wa/wa-automate";
 import { CommandManager } from "../../../../resources/CommandManager";
 import { whatsappCommands } from "../../commands";
@@ -9,13 +9,10 @@ export default async (message: Message) => {
   let media;
 
   if (message.type === "chat") text = message.body;
-
-  if (message.type === "image") {
+  else {
     text = message.caption;
     const mediaData = await decryptMedia(message);
-    media = `data:${message.mimetype};base64,${mediaData.toString(
-      "base64"
-    )}`;
+    media = `data:${message.mimetype};base64,${mediaData.toString("base64")}`;
   }
 
   const manager = CommandManager.create(
@@ -25,11 +22,11 @@ export default async (message: Message) => {
   );
   if (media) manager.addMedia(media);
 
-  service.logger.DEBUG("Message recived:", {
+  service.logger.DEBUG("Command recived:", {
     from: message.from,
     message: text,
-    hasMedia: message.type !== "chat"
-  })
+    hasMedia: message.type !== "chat",
+  });
 
   await manager.execute();
 };

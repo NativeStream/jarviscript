@@ -3,11 +3,12 @@ import {
   UserDisconnectedWebsocketEvent,
 } from "./types/index";
 import { AppSubject } from "./../../AppSubject";
-import * as socketIO from "socket.io";
 import { LoggerColors } from "../../logs/LoggerColors";
 import { AbstractService, Service } from "../../resources/Service";
 import observers from "./observers";
 import env from "../../environment";
+import { Server, ServerOptions, Socket } from "socket.io";
+import { createServer } from "http";
 
 @Service({
   observers,
@@ -15,12 +16,14 @@ import env from "../../environment";
   serviceName: "Websocket",
 })
 export class WebsocketService extends AbstractService {
-  private socketOptions: socketIO.ServerOptions = {};
-  public io: socketIO.Server = socketIO.default(this.socketOptions);
+  private socketOptions: ServerOptions = {
+    cors: { origin: "*" }
+  } as ServerOptions;
   private socketPort = env.websocket.port;
+  public io: Server = new Server(this.socketOptions);
 
   public async init(): Promise<any> {
-    this.io.sockets.on("connection", (socket: socketIO.Socket) => {
+    this.io.sockets.on("connection", (socket: Socket) => {
       socket.on("event", (data: any) => {
         data.client = { socket };
         AppSubject.getInstance().notify(data);

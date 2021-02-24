@@ -7,7 +7,7 @@ export default class NewQrCodeWhatsappObserver extends AbstractObserver<Websocke
   event = NewQrCodeWhatsappEvent;
   async callback(event: NewQrCodeWhatsappEvent): Promise<any> {
     const socket = event.client?.socket;
-    // if (socket) socket.emit(this.event.event, eventBus.data);
-    // else this.service.io.sockets.emit(this.event.event, eventBus.data);
+    if (socket) socket.emit("NewQrCodeWhatsappEvent", event.data);
+    else this.service.io.sockets.emit("NewQrCodeWhatsappEvent", event.data);
   }
 }
